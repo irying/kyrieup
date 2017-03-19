@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Impl\Repo\User\EloquentUser;
+use Impl\Repo\User\UserInterface;
 
 class RegisterController extends Controller
 {
@@ -28,15 +30,17 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    protected $user;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param UserInterface $user
      */
-    public function __construct()
+    public function __construct(EloquentUser $user)
     {
         $this->middleware('guest');
+        $this->user = $user;
     }
 
     /**
@@ -62,9 +66,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return $this->user->register([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatar' => '/images/avatars/default.jpg',
+            'confirmation_token' => str_random(40),
             'password' => bcrypt($data['password']),
         ]);
     }
