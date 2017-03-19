@@ -10,7 +10,9 @@
         "anam/phantommagick": "^1.0",
         "barryvdh/laravel-cors": "^0.8.6",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "naux/sendcloud": "^1.1",
+        "overtrue/laravel-ueditor": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -23,7 +25,8 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Kyrie\\Hammer\\": "app/packages/kyrie/hammer/src/"
+            "Kyrie\\Hammer\\": "app/packages/kyrie/hammer/src/",
+            "Impl\\":"app/Impl/"
         }
     },
     "autoload-dev": {

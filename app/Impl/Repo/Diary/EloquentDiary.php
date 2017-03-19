@@ -8,13 +8,13 @@
 
 namespace Impl\Repo\Diary;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Diary;
 
 class EloquentDiary implements DiaryInterface
 {
     protected $diary;
 
-    public function __construct(Model $diary)
+    public function __construct(Diary $diary)
     {
         $this->diary = $diary;
     }
@@ -70,15 +70,12 @@ class EloquentDiary implements DiaryInterface
 
     /**
      * @param array $data
-     * @return boolean
+     * @return Diary|bool
      */
     public function create(array $data)
     {
-        $diary = $this->diary->create($data);
-        if (!$diary) {
-            return false;
-        }
-        return true;
+        $this->diary->create($data);
+        return $this->diary;
     }
 
     /**

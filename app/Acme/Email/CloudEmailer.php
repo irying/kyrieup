@@ -9,7 +9,11 @@
 namespace Acme\Email;
 
 
-class CloudEmailer
+class CloudEmailer implements Emailer
 {
 
+    public function send($to, $from, $subject, $message)
+    {
+        // TODO: Implement send() method.
+    }
 }

@@ -11,5 +11,8 @@ namespace Impl\Service\Form\Diary;
 
 class DiaryForm
 {
+    public function __construct()
+    {
 
+    }
 }

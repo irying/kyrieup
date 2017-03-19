@@ -6,12 +6,12 @@
  * @date: 2017/3/19 下午9:30
  */
 
-namespace Impl\Repo\Diary;
-
+namespace Impl\Repo;
 
 use App\Diary;
 use App\User;
-use Barryvdh\Cors\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
+use Impl\Repo\Diary\EloquentDiary;
 use Impl\Repo\User\EloquentUser;
 
 class RepoServiceProvider extends ServiceProvider
@@ -22,8 +22,11 @@ class RepoServiceProvider extends ServiceProvider
         $app->bind('Impl\Repo\Diary\DiaryInterface', function($app){
            return new EloquentDiary(new Diary);
         });
-        $app->bind('Impl\Repo\User\UserInterface', function($app){
+        $app->bind('Impl\Repo\User\EloquentUser', function($app){
             return new EloquentUser(new User);
         });
+//        $app->bind('Impl\Repo\User\UserInterface', function($app){
+//            return new EloquentUser(new User);
+//        });
     }
 }

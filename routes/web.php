@@ -28,3 +28,9 @@ Route::get('search/{query}', function ($query){
     // Twitter::do()
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::resource('diary', 'DiaryController');
