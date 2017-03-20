@@ -14,4 +14,9 @@ class Diary extends Model
     protected $fillable = [
         'title', 'content', 'user_id'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
 }

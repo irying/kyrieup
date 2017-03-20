@@ -30,3 +30,10 @@ $factory->define(App\Todo::class, function (Faker\Generator $faker) {
         'completed' => $faker->boolean(25),
     ];
 });
+$factory->define(App\Tag::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->word,
+        'bio' => $faker->paragraph,
+    ];
+});
