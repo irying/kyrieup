@@ -68,9 +68,8 @@ class EloquentDiary implements DiaryInterface
         $diaries = $query->skip($limit * ($page - 1))
             ->take($limit)
             ->get();
-
         $result->totalItems = $this->totalDiaries($all);
-        $result->items = $query->all();
+        $result->items = $diaries;
 
         return $result;
     }
@@ -132,5 +131,13 @@ class EloquentDiary implements DiaryInterface
             $newTag = $this->tag->create(['name' => $tag]);
             return $newTag->id;
         })->toArray();
+    }
+
+    /**
+     * @return Diary
+     */
+    public function getLatest()
+    {
+        return $this->diary->enabled()->latest('updated_at')->with('user')->get();
     }
 }

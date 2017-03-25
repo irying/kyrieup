@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\View;
 use Impl\Repo\Diary\EloquentDiary;
 
 class DiaryController extends Controller
@@ -27,13 +28,14 @@ class DiaryController extends Controller
      */
     public function index()
     {
-        return 'index';
-        $page = Input::get('page', 1);
-        $perPage = 10;
-        $pageData = $this->diary->byPage($page, $perPage);
-        $diaries = new LengthAwarePaginator($pageData->items, $pageData->totalItems, $perPage);
-
-        return view('home', $diaries);
+        $diaries = $this->diary->getLatest();
+//        $page = Input::get('page', 1);
+//        $perPage = 10;
+//        $pageData = $this->diary->byPage($page, $perPage);
+//        $diaries = new LengthAwarePaginator($pageData->items, $pageData->totalItems, $perPage);
+//        $this->layout->content = View::make('diaries.index')->with('diaries', $diaries);
+//        return view('diaries.index', ['diaries' => $diaries]);
+        return view('diaries.index', compact('diaries'));
     }
 
     /**

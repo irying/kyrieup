@@ -24,4 +24,14 @@ class Diary extends Model
     {
         return $this->morphToMany(Comment::class, 'commentable');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeEnabled($query)
+    {
+        return $query->where('status', 'enabled');
+    }
 }
