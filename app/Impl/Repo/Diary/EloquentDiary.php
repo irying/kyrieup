@@ -9,14 +9,23 @@
 namespace Impl\Repo\Diary;
 
 use App\Diary;
+use App\Tag;
 
 class EloquentDiary implements DiaryInterface
 {
+    /**
+     * @var Diary
+     */
     protected $diary;
+    /**
+     * @var Tag
+     */
+    protected $tag;
 
-    public function __construct(Diary $diary)
+    public function __construct(Diary $diary, Tag $tag)
     {
         $this->diary = $diary;
+        $this->tag = $tag;
     }
 
     /**
@@ -106,5 +115,22 @@ class EloquentDiary implements DiaryInterface
         }
 
         return $this->diary->count();
+    }
+
+
+    /**
+     * @param array $tags
+     * @return array
+     */
+    public function normalizeTag(array $tags)
+    {
+        return collect($tags)->map(function ($tag) {
+            if (is_numeric($tag)) {
+                $this->tag->find($tag)->increment('slug');
+                return (int)$tag;
+            }
+            $newTag = $this->tag->create(['name' => $tag]);
+            return $newTag->id;
+        })->toArray();
     }
 }

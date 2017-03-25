@@ -54,13 +54,13 @@ class DiaryController extends Controller
      */
     public function store(StoreDiaryRequest $request)
     {
-        $tags = $this->normalizeTag($request->get('tags'));
+        $tags = $this->diary->normalizeTag($request->get('tags'));
         $data = [
             'title' => $request->get('title'),
             'content' => $request->get('content'),
             'user_id' => Auth::id(),
         ];
-        $diary = Diary::create($data);
+        $diary = $this->diary->create($data);
         $diary->tags()->attach($tags);
 
         return redirect()->route('diary.show', [$diary->id]);
@@ -75,7 +75,6 @@ class DiaryController extends Controller
     public function show($id)
     {
         $diary = $this->diary->byIdWithTags($id);
-//        var_dump($diary);die;
         return view('diaries.show', compact('diary'));
     }
 
@@ -87,19 +86,32 @@ class DiaryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $diary = $this->diary->byId($id);
+        if (Auth::user()->owns($diary)) {
+            return view('diaries.edit', compact('diary'));
+        }
+
+        return back();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param StoreDiaryRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @internal param $StoreDiaryRequest
      */
-    public function update(Request $request, $id)
+    public function update(StoreDiaryRequest $request, $id)
     {
-        //
+        $diary = $this->diary->byId($id);
+        $tags = $this->diary->normalizeTag($request->get('tags'));
+        $diary->update([
+            'title' => $request->get('title'),
+            'content' => $request->get('content'),
+        ]);
+        $diary->tags()->sync($tags);
+        return redirect()->route('diary.show', [$diary->id]);
     }
 
     /**
@@ -113,19 +125,4 @@ class DiaryController extends Controller
         //
     }
 
-    /**
-     * @param array $tags
-     * @return array
-     */
-    protected function normalizeTag(array $tags)
-    {
-        return collect($tags)->map(function ($tag) {
-            if (is_numeric($tag)) {
-                Tag::find($tag)->increment('slug');
-                return (int)$tag;
-            }
-            $newTag = Tag::create(['name' => $tag]);
-            return $newTag->id;
-        })->toArray();
-    }
 }

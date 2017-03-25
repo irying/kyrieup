@@ -35,7 +35,7 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param UserInterface $user
+     * @param EloquentUser $user
      */
     public function __construct(EloquentUser $user)
     {

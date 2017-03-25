@@ -13,6 +13,11 @@
                     <div class="panel-body">
                         {!! $diary->content !!}
                     </div>
+                    <div class="actions" >
+                        @if(Auth::check() && Auth::user()->owns($diary))
+                            <span class="edit"><a href="/diary/{{$diary->id}}/edit">编辑</a></span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
