@@ -140,4 +140,13 @@ class EloquentDiary implements DiaryInterface
     {
         return $this->diary->enabled()->latest('updated_at')->with('user')->get();
     }
+
+    /**
+     * @param Diary $diary
+     * @return bool|null
+     */
+    public function delete(Diary $diary)
+    {
+        return $diary->delete();
+    }
 }

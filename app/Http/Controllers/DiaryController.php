@@ -124,7 +124,14 @@ class DiaryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $diary = $this->diary->byId($id);
+        if (Auth::user()->owns($diary)) {
+            $this->diary->delete($diary);
+
+            return redirect('/diary');
+        }
+
+        abort(403, 'Forbidden');
     }
 
 }

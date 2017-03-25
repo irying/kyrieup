@@ -16,6 +16,11 @@
                     <div class="actions" >
                         @if(Auth::check() && Auth::user()->owns($diary))
                             <span class="edit"><a href="/diary/{{$diary->id}}/edit">编辑</a></span>
+                            <form action="/diary/{{$diary->id}}" method="post">
+                                {{method_field('DELETE')}}
+                                {{csrf_field()}}
+                                <button class="btn-danger">删除</button>
+                            </form>
                         @endif
                     </div>
                 </div>
