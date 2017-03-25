@@ -34,10 +34,11 @@
                     </div>
                     @if(Auth::check())
                         <div class="panel-body">
-                            <a href="/diary/{{$diary->id}}/follow" class="btn btn-success"
-                               class="btn btn-default {{Auth::user()->followed($diary->id) ? 'btn-success' : ''}}">
-                                {{Auth::user()->followed($diary->id) ? '已关注' : '关注TA'}}
-                            </a>
+                            {{--<a href="/diary/{{$diary->id}}/follow" class="btn btn-success"--}}
+                               {{--class="btn btn-default {{Auth::user()->followed($diary->id) ? 'btn-success' : ''}}">--}}
+                                {{--{{Auth::user()->followed($diary->id) ? '已关注' : '关注TA'}}--}}
+                            {{--</a>--}}
+                            <diary-follow-button :diary="{{$diary->id}}" :user="{{Auth::user()->id}}"></diary-follow-button>
                             <a href="#editor" class="btn btn-primary">发表评论</a>
                         </div>
                     @endif

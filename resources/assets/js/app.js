@@ -14,6 +14,7 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('diary-follow-button', require('./components/DiaryFollowButton.vue'));
 
 const app = new Vue({
     el: '#app'

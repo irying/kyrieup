@@ -62,3 +62,35 @@ Route::get('/tags', function (Request $request) {
         ->get();
     return $tags;
 })->middleware('api');
+
+//Route::get('/diary/follower', function (Request $request){
+////    return $request->user;
+//    return response()->json(['followd' => false]);
+//})->middleware('api', 'cors');
+
+Route::post('/diary/follower', function (Request $request){
+    $followed = \App\Follow::where('diary_id', $request->get('diary'))
+        ->where('user_id',$request->get('user'))
+        ->count();
+    if ($followed) {
+        return response()->json(['followed' => true]);
+    } else {
+        return response()->json(['followed' => false]);
+    }
+})->middleware('api', 'cors');
+
+Route::post('/diary/follow', function (Request $request){
+    $followed = \App\Follow::where('diary_id', $request->get('diary'))
+        ->where('user_id',$request->get('user'))
+        ->first();
+    if (is_null($followed)) {
+        \App\Follow::create([
+            'diary_id' => $request->get('diary'),
+            'user_id' => $request->get('user'),
+        ]);
+        return response()->json(['followed' => true]);
+    } else {
+        $followed->delete();
+        return response()->json(['followed' => false]);
+    }
+})->middleware('api', 'cors');
