@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Diary;
 use App\Http\Requests\StoreDiaryRequest;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -52,12 +54,14 @@ class DiaryController extends Controller
      */
     public function store(StoreDiaryRequest $request)
     {
+        $tags = $this->normalizeTag($request->get('tags'));
         $data = [
             'title' => $request->get('title'),
             'content' => $request->get('content'),
             'user_id' => Auth::id(),
         ];
-        $diary = $this->diary->create($data);
+        $diary = Diary::create($data);
+        $diary->tags()->attach($tags);
 
         return redirect()->route('diary.show', [$diary->id]);
     }
@@ -70,7 +74,8 @@ class DiaryController extends Controller
      */
     public function show($id)
     {
-        $diary = $this->diary->byId($id);
+        $diary = $this->diary->byIdWithTags($id);
+//        var_dump($diary);die;
         return view('diaries.show', compact('diary'));
     }
 
@@ -106,5 +111,21 @@ class DiaryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param array $tags
+     * @return array
+     */
+    protected function normalizeTag(array $tags)
+    {
+        return collect($tags)->map(function ($tag) {
+            if (is_numeric($tag)) {
+                Tag::find($tag)->increment('slug');
+                return (int)$tag;
+            }
+            $newTag = Tag::create(['name' => $tag]);
+            return $newTag->id;
+        })->toArray();
     }
 }

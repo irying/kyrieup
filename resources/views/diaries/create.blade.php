@@ -20,6 +20,10 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <select name="tags[]" class="js-example-basic-multiple form-control" multiple="multiple">
+                                </select>
+                            </div>
                             <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
                                 <!-- 编辑器容器 -->
                                 <script id="container" name="content" type="text/plain">
@@ -38,11 +42,52 @@
             </div>
         </div>
     </div>
-    <!-- 实例化编辑器 -->
-    <script type="text/javascript">
-        var ue = UE.getEditor('container');
-        ue.ready(function() {
-            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
-        });
-    </script>
+    @section('js')
+        <!-- 实例化编辑器 -->
+        <script type="text/javascript">
+            var ue = UE.getEditor('container');
+            ue.ready(function () {
+                ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
+            });
+//            $(".js-example-basic-multiple").select2();
+            $(document).ready(function () {
+                function formatTag (tag) {
+                    return "<div class='select2-result-repository clearfix'>" +
+                    "<div class='select2-result-repository__meta'>" +
+                    "<div class='select2-result-repository__title'>" +
+                    tag.name ? tag.name : "Laravel"   +
+                        "</div></div></div>";
+                }
+
+                function formatTagSelection (tag) {
+                    return tag.name || tag.text;
+                }
+
+                $(".js-example-basic-multiple").select2({
+                    tags: true,
+                    placeholder: '选择相关话题',
+                    minimumInputLength: 2,
+                    ajax: {
+                        url: '/api/tags',
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                q: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data
+                            };
+                        },
+                        cache: true
+                    },
+                    templateResult: formatTag,
+                    templateSelection: formatTagSelection,
+                    escapeMarkup: function (markup) { return markup; }
+                });
+            })
+        </script>
+    @endsection
 @endsection

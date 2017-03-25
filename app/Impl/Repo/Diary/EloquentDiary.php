@@ -29,6 +29,15 @@ class EloquentDiary implements DiaryInterface
     }
 
     /**
+     * @param $id
+     * @return stdObject object of diary information
+     */
+    public function byIdWithTags($id)
+    {
+        return $this->diary->where('id', $id)->with('tags')->first();
+    }
+
+    /**
      * @param int $page
      * @param int $limit
      * @param bool $all
@@ -74,8 +83,7 @@ class EloquentDiary implements DiaryInterface
      */
     public function create(array $data)
     {
-        $this->diary->create($data);
-        return $this->diary;
+        return $this->diary->create($data);
     }
 
     /**

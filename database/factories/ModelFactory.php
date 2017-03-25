@@ -24,7 +24,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Todo::class, function (Faker\Generator $faker) {
-
     return [
         'title' => $faker->sentence,
         'completed' => $faker->boolean(25),
@@ -33,7 +32,7 @@ $factory->define(App\Todo::class, function (Faker\Generator $faker) {
 $factory->define(App\Tag::class, function (Faker\Generator $faker) {
 
     return [
-        'name' => $faker->word,
+        'name' => $faker->name,
         'bio' => $faker->paragraph,
     ];
 });

@@ -55,3 +55,10 @@ Route::get('/todos/{id}', function ($id){
 
     return response()->json($todo);
 })->middleware('api', 'cors');
+
+Route::get('/tags', function (Request $request) {
+    $tags = \App\Tag::select(['id','name'])
+        ->where('name', 'like', '%'.$request->query('q').'%')
+        ->get();
+    return $tags;
+})->middleware('api');
