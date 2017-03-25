@@ -93,4 +93,4 @@ Route::post('/diary/follow', function (Request $request){
         $followed->delete();
         return response()->json(['followed' => false]);
     }
-})->middleware('api', 'cors');
+})->middleware('auth:api');

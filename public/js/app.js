@@ -12241,6 +12241,7 @@ window.axios = __webpack_require__(13);
 
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  'Authorization': window.Laravel.apiToken,
   'X-Requested-With': 'XMLHttpRequest'
 };
 
