@@ -32,5 +32,6 @@ Route::get('search/{query}', function ($query){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-
 Route::resource('diary', 'DiaryController');
+
+Route::get('diary/{diary}/follow', 'DiaryController@follow')->middleware('auth');

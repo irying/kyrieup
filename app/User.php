@@ -16,7 +16,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'confirmation_token'
+        'name',
+        'email',
+        'password',
+        'avatar',
+        'confirmation_token'
     ];
 
     /**
@@ -25,7 +29,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -35,5 +40,31 @@ class User extends Authenticatable
     public function owns(Model $model)
     {
         return $this->id == $model->user_id;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function follows()
+    {
+        return $this->belongsToMany(Diary::class, 'user_diary')->withTimestamps();
+    }
+
+    /**
+     * @param $diaryId
+     * @return array
+     */
+    public function followThis($diaryId)
+    {
+        return $this->follows()->toggle($diaryId);
+    }
+
+    /**
+     * @param $diaryId
+     * @return bool
+     */
+    public function followed($diaryId)
+    {
+        return !! $this->follows()->where('diary_id', $diaryId)->count();
     }
 }

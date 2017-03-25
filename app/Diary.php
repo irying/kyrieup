@@ -30,6 +30,11 @@ class Diary extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_diary')->withTimestamps();
+    }
+
     public function scopeEnabled($query)
     {
         return $query->where('status', 'enabled');

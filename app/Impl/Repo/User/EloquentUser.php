@@ -22,6 +22,10 @@ class EloquentUser implements UserInterface
         $this->user = $user;
     }
 
+    /**
+     * @param array $data
+     * @return User
+     */
     public function register(array $data)
     {
         $user = $this->user->create($data);

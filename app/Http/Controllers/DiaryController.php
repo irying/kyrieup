@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Diary;
 use App\Http\Requests\StoreDiaryRequest;
-use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\View;
 use Impl\Repo\Diary\EloquentDiary;
 
 class DiaryController extends Controller
 {
+    /**
+     * @var EloquentDiary
+     */
     protected $diary;
 
     public function __construct(EloquentDiary $diary)
@@ -132,6 +131,17 @@ class DiaryController extends Controller
         }
 
         abort(403, 'Forbidden');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function follow($id)
+    {
+        Auth::user()->followThis($id);
+
+        return back();
     }
 
 }
