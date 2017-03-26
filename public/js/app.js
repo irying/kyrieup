@@ -12140,12 +12140,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = {
-    props: ['diary', 'user'],
+    props: ['diary'],
     mounted: function mounted() {
         var _this = this;
 
         //            console.log('Component mounted.')
-        axios.post('/api/diary/follower', { 'diary': this.diary, 'user': this.user }).then(function (response) {
+        axios.post('/api/diary/follower', { 'diary': this.diary }).then(function (response) {
             console.log(response.data);
             _this.followed = response.data.followed;
         });
@@ -12168,7 +12168,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         follow: function follow() {
             var _this2 = this;
 
-            axios.post('/api/diary/follow', { 'diary': this.diary, 'user': this.user }).then(function (response) {
+            axios.post('/api/diary/follow', { 'diary': this.diary }).then(function (response) {
                 console.log(response.data);
                 _this2.followed = response.data.followed;
             });

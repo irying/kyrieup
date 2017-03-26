@@ -69,9 +69,8 @@ Route::get('/tags', function (Request $request) {
 //})->middleware('api', 'cors');
 
 Route::post('/diary/follower', function (Request $request){
-    $followed = \App\Follow::where('diary_id', $request->get('diary'))
-        ->where('user_id',$request->get('user'))
-        ->count();
+    $user = Auth::guard('api')->user();
+    $followed = $user->followed($request->get('diary'));
     if ($followed) {
         return response()->json(['followed' => true]);
     } else {
@@ -80,17 +79,14 @@ Route::post('/diary/follower', function (Request $request){
 })->middleware('api', 'cors');
 
 Route::post('/diary/follow', function (Request $request){
-    $followed = \App\Follow::where('diary_id', $request->get('diary'))
-        ->where('user_id',$request->get('user'))
-        ->first();
-    if (is_null($followed)) {
-        \App\Follow::create([
-            'diary_id' => $request->get('diary'),
-            'user_id' => $request->get('user'),
-        ]);
+    $user = Auth::guard('api')->user();
+    $diary = \App\Diary::find($request->get('diary'));
+    $followed = $user->followThis($diary->id);
+    if (count($followed['attached']) > 0) {
+        $diary->increment('followers_count');
         return response()->json(['followed' => true]);
     } else {
-        $followed->delete();
+        $diary->decrement('followers_count');
         return response()->json(['followed' => false]);
     }
 })->middleware('auth:api');

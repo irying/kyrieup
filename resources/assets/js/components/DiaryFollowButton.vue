@@ -4,10 +4,10 @@
 
 <script>
     export default {
-        props: ['diary', 'user'],
+        props: ['diary'],
         mounted() {
 //            console.log('Component mounted.')
-            axios.post('/api/diary/follower', {'diary':this.diary,'user':this.user})
+            axios.post('/api/diary/follower', {'diary':this.diary})
                 .then(response => {
                     console.log(response.data)
                     this.followed = response.data.followed;
@@ -28,7 +28,7 @@
         },
         methods:{
             follow() {
-                axios.post('/api/diary/follow', {'diary':this.diary,'user':this.user})
+                axios.post('/api/diary/follow', {'diary':this.diary,})
                     .then(response => {
                         console.log(response.data)
                         this.followed = response.data.followed;
