@@ -15,6 +15,9 @@ use App\User;
 
 class EloquentUser implements UserInterface
 {
+    /**
+     * @var User
+     */
     public $user;
 
     public function __construct(User $user)
@@ -37,5 +40,14 @@ class EloquentUser implements UserInterface
     public function login()
     {
         // TODO: Implement login() method.
+    }
+
+    /**
+     * @param $id
+     * @return User
+     */
+    public function byId($id)
+    {
+        return $this->user->find($id);
     }
 }

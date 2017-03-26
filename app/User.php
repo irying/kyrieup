@@ -68,4 +68,29 @@ class User extends Authenticatable
     {
         return !! $this->follows()->where('diary_id', $diaryId)->count();
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function following()
+    {
+        return $this->belongsToMany(self::class, 'followers', 'follower_id', 'followed_id')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followersUser()
+    {
+        return $this->belongsToMany(self::class, 'followers', 'followed_id', 'follower_id')->withTimestamps();
+    }
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function followThisUser($user)
+    {
+        return $this->following()->toggle($user);
+    }
 }

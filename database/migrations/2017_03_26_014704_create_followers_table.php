@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateDiary extends Migration
+class CreateFollowersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class UpdateDiary extends Migration
      */
     public function up()
     {
-        Schema::table('diaries', function (Blueprint $table) {
-            $table->integer('followers_count')->default('0');
+        Schema::create('followers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('follower_id')->index();
+            $table->unsignedInteger('followed_id')->index();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class UpdateDiary extends Migration
      */
     public function down()
     {
-        Schema::table('diaries', function (Blueprint $table) {
-            $table->dropColumn('followers_count');
-        });
+        Schema::dropIfExists('followers');
     }
 }
