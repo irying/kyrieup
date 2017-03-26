@@ -35,3 +35,4 @@ Route::get('/home', 'HomeController@index');
 Route::resource('diary', 'DiaryController');
 
 Route::get('diary/{diary}/follow', 'DiaryController@follow')->middleware('auth');
+Route::get('notifications', 'NotificationsController@index')->middleware('auth');
