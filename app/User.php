@@ -93,4 +93,12 @@ class User extends Authenticatable
     {
         return $this->following()->toggle($user);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'to_user_id');
+    }
 }
