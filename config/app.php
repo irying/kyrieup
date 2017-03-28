@@ -162,7 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-//        \Kyrie\Hammer\StringUtilProvider::class,
+        \Kyrie\Hammer\StringUtilProvider::class,
         Naux\Mail\SendCloudServiceProvider::class,
         Overtrue\LaravelUEditor\UEditorServiceProvider::class,
 

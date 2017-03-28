@@ -16,6 +16,8 @@ require('./bootstrap');
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('diary-follow-button', require('./components/DiaryFollowButton.vue'));
 Vue.component('user-follow-button', require('./components/UserFollowButton.vue'));
+Vue.component('send-message', require('./components/SendMessage.vue'));
+Vue.component('user-avatar', require('./components/UserAvatar.vue'));
 
 const app = new Vue({
     el: '#app'

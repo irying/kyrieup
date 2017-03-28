@@ -36,3 +36,5 @@ Route::resource('diary', 'DiaryController');
 
 Route::get('diary/{diary}/follow', 'DiaryController@follow')->middleware('auth');
 Route::get('notifications', 'NotificationsController@index')->middleware('auth');
+
+Route::get('/avatar', 'UsersController@avatar');

@@ -25,7 +25,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Kyrie\\Hammer\\": "app/packages/kyrie/hammer/src/",
+            "Kyrie\\Hammer\\": "packages/kyrie/hammer/src/",
             "Impl\\":"app/Impl/"
         }
     },

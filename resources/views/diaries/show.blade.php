@@ -88,7 +88,8 @@
                             {{--{{Auth::user()->followed($diary->id) ? '已关注' : '关注TA'}}--}}
                             {{--</a>--}}
                             <user-follow-button user="{{$diary->user_id}}"></user-follow-button>
-                            <a href="#editor" class="btn btn-primary pull-right">发送私信</a>
+                            {{--<a href="#editor" class="btn btn-primary pull-right">发送私信</a>--}}
+                            <send-message></send-message>
                         </div>
                     @endif
                 </div>
