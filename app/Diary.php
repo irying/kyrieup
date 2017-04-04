@@ -25,11 +25,13 @@ class Diary extends Model
         return $this->morphToMany(Comment::class, 'commentable');
     }
 
+    // owner: one-to-many
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // follow: many-to-many
     public function followers()
     {
         return $this->belongsToMany(User::class, 'user_diary')->withTimestamps();

@@ -70,6 +70,7 @@ class User extends Authenticatable
     }
 
     /**
+     * 关注列表
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function following()
@@ -78,6 +79,7 @@ class User extends Authenticatable
     }
 
     /**
+     * 粉丝列表
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function followersUser()
@@ -86,6 +88,7 @@ class User extends Authenticatable
     }
 
     /**
+     * 关注xx
      * @param $user
      * @return array
      */
