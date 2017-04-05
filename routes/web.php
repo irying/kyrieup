@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('email/verify/{token}',['as' => 'email.verify', 'uses' => 'EmailController@verify']);
+
 Route::get('users/{username}', function ($username){
     $client = new \Guzzle\Service\Client('https://api.github.com/');
     $response = $client->get("users/$username")->send();

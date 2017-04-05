@@ -11,6 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Impl\Repo\User\EloquentUser;
 use Impl\Repo\User\UserInterface;
+use Naux\Mail\SendCloudTemplate;
 
 class UserRegistered
 {
@@ -25,6 +26,7 @@ class UserRegistered
     public function __construct($user)
     {
         $this->user = $user;
+        $this->sendVerifyEmailTo($user);
     }
 
     /**
@@ -35,5 +37,23 @@ class UserRegistered
     public function broadcastOn()
     {
         return new PrivateChannel('channel-name');
+    }
+
+    /**
+     * @param $user
+     */
+    protected function sendVerifyEmailTo($user)
+    {
+        $data = [
+            'url' => route('email.verify', ['token' => $user->confirmation_token]),
+            'name' => $user->name
+        ];
+        $template = new SendCloudTemplate('kyrieup_register', $data);
+
+        \Mail::raw($template, function ($message) use($user) {
+            $message->from('jb@laravist.com', 'Laravel');
+
+            $message->to($user->email);
+        });
     }
 }
