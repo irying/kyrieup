@@ -12,7 +12,8 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "naux/sendcloud": "^1.1",
-        "overtrue/laravel-ueditor": "~1.0"
+        "overtrue/laravel-ueditor": "~1.0",
+        "vinkla/pusher": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

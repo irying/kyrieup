@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/broadcast', function () {
+    event(new \App\Events\PusherEvent('Great Wall is great ', '1'));
+    return 'This is a Laravel Broadcaster Test!';
+});
 
 Route::get('email/verify/{token}',['as' => 'email.verify', 'uses' => 'EmailController@verify']);
 
