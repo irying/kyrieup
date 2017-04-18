@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDiaryRequest;
+use App\Jobs\DiaryLog;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,7 @@ class DiaryController extends Controller
         ];
         $diary = $this->diary->create($data);
         $diary->tags()->attach($tags);
-
+        dispatch(new DiaryLog($diary));
         return redirect()->route('diary.show', [$diary->id]);
     }
 
