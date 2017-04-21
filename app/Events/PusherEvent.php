@@ -15,10 +15,12 @@ class PusherEvent extends \Event implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $text, $id;
+
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $text
+     * @param $id
      */
     public function __construct($text, $id)
     {
@@ -33,6 +35,7 @@ class PusherEvent extends \Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        return ['laravel-broadcast-channel'];
         return new PrivateChannel('laravel-broadcast-channel');
     }
 }
